@@ -1,0 +1,72 @@
+﻿@model WebProjectPTI.Models.Aula
+
+
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+
+<form asp-controller="Aula" asp-action="CriarAula" method="post" id="CreateForm" enctype="multipart/form-data">
+    <div class="row" style="margin-top: 10%">
+        <div class="col-md-12 d-flex justify-content-center">
+            <div class="card col-md-8">
+                <div class="card-body ">
+                    <div class="text-center">
+                        <h3 class="font-weight-bold">Detalhes da aula</h3>
+                        <h5>Professor, aqui estão os detalhes da sua aula!</h5>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="form-group col-md-12">
+                            <label for="SocialReason">@Html.DisplayNameFor(model => model.Aluno.Nome)</label>
+                            <input asp-for="Aluno.Nome" type="text" class="form-control" id="searchInput" placeholder="Digite o nome do aluno" readonly>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="NfNumber">@Html.DisplayNameFor(model => model.DataMesAula)</label>
+                            <input asp-for="DataMesAula" type="date" class="form-control" id="NfNumber" readonly>
+                            @Html.ValidationMessageFor(x => x.DataMesAula)
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="NfNumber">@Html.DisplayNameFor(model => model.HoraAula)</label>
+                            <input asp-for="HoraAula" type="time" class="form-control" id="NfNumber" readonly>
+                            @Html.ValidationMessageFor(x => x.HoraAula)
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row d-flex  justify-content-center">
+
+        <a class="btn btn-secondary mb-5 col-md-2 mr-2" asp-controller="Aula" asp-action="VerAulasDaSemana" role="button">Voltar</a>
+    </div>
+
+
+
+
+</form>
+
+@section Scripts {
+    <script src="~/lib/jQuery-Mask-Plugin-master/src/jquery.mask.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        });
+
+        $("#CreateForm").submit(() => {
+            $("#submitButton").hide();
+            $("#loadingSpinner").show();
+        })
+
+
+
+    </script>
+}

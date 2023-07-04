@@ -1,0 +1,61 @@
+﻿@model List<WebProjectPTI.Models.Aula>
+
+<div class="app-page-title mt-3 mb-4">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="pe-7s-cart icon-gradient bg-happy-itmeo">
+                </i>
+            </div>
+            <div>
+                <h3 class="text-center mb-3">Agenda</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+    <div class="row" style="overflow-y: scroll; height: 75vh;">
+        @foreach (var item in Model)
+        {
+
+            <div class="card text-dark bg-light mb-3 mx-2" style="max-width: 18rem; max-height: 18rem">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 d-flex mt-md-5">
+                                Aula
+                                <a asp-action="DeleteById" asp-controller="Aula" asp-route-id="@item.Id_Aula" title="Apagar"><span style="color: red; margin-left: 105px; cursor: pointer" class="fa fa fa-fw fa-trash-can"></span></a>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(item.DiaSemanaAula)</div>
+                            <div class="text-gray-800">@Html.DisplayFor(modelItem => item.Aluno.Nome)</div>
+                            <div class="text-gray-800 d-flex"><p name="dateAula"> @Html.DisplayFor(modelItem => item.DataMesAula.Date)</p> <p name="horaAula" class="mx-2"> @Html.DisplayFor(modelItem => item.HoraAula.TimeOfDay)</p> </div>
+                            <br />
+                            <div class="text-gray-800">
+                                <a class="float-left" title="Ver mais" href="@Url.Action("VerMais", "Aula", new{id = item.Id_Aula})"><i class="fa fa-fw fa-eye"></i> Ver mais</a>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    </div>
+
+@section Scripts {
+    <script src="~/lib/jQuery-Mask-Plugin-master/src/jquery.mask.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('[name="dateAula"]').mask('00/00/0000');
+            $('[name="horaAula"]').mask('00:00:00');
+        });
+
+
+    </script>
+}

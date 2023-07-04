@@ -1,0 +1,108 @@
+﻿@model WebProjectPTI.Models.Aula
+
+
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+
+<form asp-controller="Aula" asp-action="CriarAula" method="post" id="CreateForm" enctype="multipart/form-data">
+    <div class="row" style="margin-top: 10%">
+        <div class="col-md-12 d-flex justify-content-center">
+            <div class="card col-md-8">
+                <div class="card-body ">
+                    <div class="text-center">
+                        <h3 class="font-weight-bold">Marcar Aula</h3>
+                        <h5>Preencha os campos com cuidado!</h5>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="form-group col-md-12">
+                            <label for="SocialReason">@Html.DisplayNameFor(model => model.Aluno.Nome)</label>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Digite o nome do aluno" required>
+                            <input type="hidden" id="idByComplete" asp-for="Id_Aluno" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="NfNumber">@Html.DisplayNameFor(model => model.DataMesAula)</label>
+                            <input asp-for="DataMesAula" type="date" class="form-control" id="NfNumber"  required>
+                            @Html.ValidationMessageFor(x => x.DataMesAula)
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="NfNumber">@Html.DisplayNameFor(model => model.HoraAula)</label>
+                            <input asp-for="HoraAula" type="time" class="form-control" id="NfNumber" required>
+                            @Html.ValidationMessageFor(x => x.HoraAula)
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+
+    <br />
+
+    <div class="row d-flex  justify-content-center">
+
+        <button class="btn btn-light mb-5 col-md-2 mx-3" id="loadingSpinner" type="button">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+        </button>
+
+        <button class="btn btn-success mb-5 col-md-2 mx-3" type="submit" id="submitButton">Adicionar</button>
+        <a class="btn btn-secondary mb-5 col-md-2 mr-2" asp-controller="Home" asp-action="IndexClient" role="button">Voltar</a>
+    </div>
+
+
+</form>
+
+@section Scripts {
+    <script src="~/lib/jQuery-Mask-Plugin-master/src/jquery.mask.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#loadingSpinner").hide();
+        });
+
+        $("#CreateForm").submit(() => {
+            $("#submitButton").hide();
+            $("#loadingSpinner").show();
+        })
+
+        //autocomplete function (searchin product by loged client)
+        $(function () {
+            $("#searchInput").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Alunos/AutoComplete/',
+                        data: { "prefix": request.term },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText)
+                        }
+                    });
+                },
+                select: function (e, i, x, c) {
+                    $("#idByComplete").val(i.item.val);
+                },
+                minLength: 1
+
+            });
+        });
+
+
+    </script>
+}

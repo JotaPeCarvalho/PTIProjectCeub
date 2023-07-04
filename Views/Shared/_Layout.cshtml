@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Poyares Idiomas</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="~/webApiPTI.styles.css" asp-append-version="true" />
+    
+
+</head>
+<body style="overflow-x: hidden;">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow mb-3 backgroundColor">
+            <div class="container">
+                
+                @await Component.InvokeAsync("Menu")
+
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer fixed-bottom p-md-4  text-muted">
+        <div class="container">
+            &copy; 2023 - webApiPTI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src='~/lib/fontawesome/js/all.js'></script>
+    <script src="~/js/sweetalert2.min.js"></script>
+    <script src="~/js/tabela.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            const messageSuccess = "@Html.Raw(TempData["SuccessMessage"])";
+            const messageError = "@Html.Raw(TempData["ErrorMessage"])";
+
+            if (messageSuccess != "") {
+                Swal.fire({ title: 'Sucesso!', text: messageSuccess, icon: 'success', confirmButtonText: 'Continuar' })
+            }
+
+            if (messageError != "") {
+                Swal.fire({ title: 'Erro!', text: messageError, icon: 'error', confirmButtonText: 'Continuar' })
+            }
+
+
+            $('.nav-link').on('click', function () {
+                $('.nav-link').removeClass('active'); // Remove a classe 'active' de todos os links
+                $(this).addClass('active'); // Adiciona a classe 'active' ao link clicado
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
